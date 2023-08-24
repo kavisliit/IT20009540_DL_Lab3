@@ -1,0 +1,65 @@
+Lab 3
+
+1
+
+.Open Google colab. Upload the 1D_Convolution.ipynb to colab. Run all cells. Based on the result, explain how 1D convolution can be used to identify the edges in an image.
+
+   The provided code demonstrates the utilization of 1D convolution for edge detection within an image. The process is elucidated step by step:
+
+signal = np.array([1, 1, 1, 1, 1, 1, 1, 0.5, 0.5, 0.5, 1, 1, 1])
+plt.stem(signal)
+plt.show()
+
+Signal Definition: A one-dimensional signal is introduced, representing pixel intensities along a linear axis in an image. This can be analogous to a grayscale image's intensity profile across a specific direction. The stem plot visualization showcases the signal's discrete values.
+
+oneD_filter = np.array([-1, 1])
+plt.stem(oneD_filter)
+plt.show()
+
+1D Filter Specification: A 1D filter is defined, typically employed for edge detection. This filter comprises a negative coefficient followed by a positive coefficient. The rationale behind this design is to detect abrupt transitions in intensity, characteristic of edges in images. The stem plot visualization of the filter elucidates its structure.
+
+result = np.convolve(signal, oneD_filter, 'valid')
+plt.stem(result)
+plt.show()
+
+Convolution Operation: The convolution operation is executed by convolving the signal with the defined filter using the np.convolve() function. The 'valid' mode ensures that only regions with complete overlap are considered in the convolution result. The outcome, referred to as "result," embodies the convolution output.
+
+The implication of this process in edge detection is as follows:
+•Identification of Edge Locations: Notably, edges in images correspond to regions with substantial alterations in intensity or color. In the convolution result, regions linked to edges manifest as prominent positive peaks. This is due to the filter's inherent responsiveness to transitions from low to high intensity, which is a hallmark of an edge.
+
+•Filter Response to Intensity Transitions: The defined filter's arrangement of negative and positive coefficients facilitates its detection of points where intensity shifts from lower to higher values. This results in a pronounced positive response in the convolution output.
+
+•Visual Representation of Detected Edges: The stem plot representation of the convolution output illustrates the positions of these intensity transitions, effectively indicating the locations of edges within the original signal. When extrapolated to the realm of image processing, this outcome translates to the accentuation of edges within the image. 
+
+
+
+2.
+
+Upload the CNN_with_keras3.ipynb file to colab. Increase the number of epochs to 50.
+Why does the validation error increases when the number of epochs are increased? Explain how you can modify the training process to stop that from happening.
+
+•Increasing the number of epochs can sometimes lead to an increase in validation error due to overfitting. Overfitting occurs when a model learns the training data too well, including noise and random fluctuations, and as a result, it fails to generalize well to new, unseen data (validation or test data).
+Initially, as the model trains, it learns to capture meaningful patterns and relationships in the training data, and this is reflected in a decrease in training loss and possibly a decrease in validation loss as well. However, after a certain point, the model might start to memorize the training data, and its performance on the validation data might begin to deteriorate. This is because the model starts focusing on noise and specific examples from the training data that don't generalize well.
+
+•Preventing Overfitting and Increasing Model Generalization:
+To prevent the increase in validation error when increasing the number of epochs, we can implement several techniques:
+
+a. Early Stopping: Implement early stopping, where we monitor the validation loss during training. If the validation loss starts to increase consistently for a certain number of epochs, we stop training to prevent overfitting. This can be achieved by using the EarlyStopping callback in Keras.
+
+b. Regularization: Apply regularization techniques like L2 regularization (also known as weight decay) to the model. This adds a penalty to the model's loss function based on the magnitude of the weights, discouraging the model from learning noise in the training data.
+
+c. Dropout: Introduce dropout layers within the neural network architecture. Dropout randomly deactivates a certain percentage of neurons during each training iteration, forcing the model to rely on a variety of paths to learn features rather than becoming overly dependent on a specific set of neurons.
+
+d. Data Augmentation: If applicable, use data augmentation to artificially increase the diversity of the training data. This can help the model generalize better to new data by exposing it to a wider range of variations in the input data.
+
+e. Batch Normalization: Implement batch normalization layers, which can help stabilize the training process and prevent overfitting by normalizing the inputs to each layer.
+
+f. Model Complexity: If we suspect that the model is too complex for the problem at hand, consider reducing the model's capacity by reducing the number of layers or neurons. A simpler model is less likely to overfit.
+
+Implementing these techniques can help our model generalize better and prevent the increase in validation error that might occur when training for a larger number of epochs.
+
+
+
+Explain how the mini batch SGD (Stochastic Gradient Descent) algorithm can converge faster than the batch Gradient Descent algorithm.
+
+•Mini-batch SGD updates the model's parameters more frequently, allowing it to converge faster compared to batch Gradient Descent. The more frequent updates enable the algorithm to navigate the cost surface more dynamically, escaping shallow local minima and converging towards the global minimum more efficiently.
