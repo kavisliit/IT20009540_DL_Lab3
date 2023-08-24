@@ -33,7 +33,7 @@ The implication of this process in edge detection is as follows:
 
 
 
-2.
+3.
 
 Upload the CNN_with_keras3.ipynb file to colab. Increase the number of epochs to 50.
 Why does the validation error increases when the number of epochs are increased? Explain how you can modify the training process to stop that from happening.
